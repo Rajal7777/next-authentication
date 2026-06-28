@@ -9,11 +9,13 @@ export const authOptions: NextAuthConfig = {
         username: {
           label: "Username",
           type: "text",
-          placeholder: "Entere your email adress",
+          placeholder: "Enter your email address",
         },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        console.log(credentials);    //{csrfToken: 'acd5218eaf083a6208380d85e42cc32a982d276bac0df12012e2c134c94ac217', username: 'test@test.com',password: '12345'}
+
         const username = credentials?.username;
         const password = credentials?.password;
 
