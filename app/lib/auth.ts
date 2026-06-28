@@ -5,6 +5,7 @@ export const authOptions: NextAuthConfig = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
+      //This will create a login form with username and password field
       credentials: {
         username: {
           label: "Username",
@@ -13,9 +14,11 @@ export const authOptions: NextAuthConfig = {
         },
         password: { label: "Password", type: "password" },
       },
+      //this function will be called every time user login
       async authorize(credentials) {
         console.log(credentials); //{csrfToken: 'acd5218eaf083a6208380d85e42cc32a982d276bac0df12012e2c134c94ac217', username: 'test@test.com',password: '12345'}
 
+        //Extract values
         const username = credentials?.username;
         const password = credentials?.password;
 
@@ -48,7 +51,7 @@ export const authOptions: NextAuthConfig = {
     },
     async session({ session, token }) {
       if (session.user) {
-        //@ts-ignore
+        //@ts-expect-error
         session.user.id = token.id;
       }
       return session;

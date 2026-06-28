@@ -1,13 +1,14 @@
-'use client';
+"use client";
 
-import React from "react";
-import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/react"
+import Link from "next/link";
 
+export default function Component() {
+  const { data: session, status } = useSession()
+console.log("session", session)
+  if (status === "authenticated") {
+    return <p>Signed In successfully || email: {session?.user?.email}</p>
+  }
 
-export default function Home() {
-const {data: session} = useSession()
-
-  return (
-   <div> {JSON.stringify(session)}  home</div>
-  );
+return !session && <Link href="/api/auth/signin">Sign in</Link>
 }
