@@ -14,7 +14,7 @@ export const authOptions: NextAuthConfig = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log(credentials);    //{csrfToken: 'acd5218eaf083a6208380d85e42cc32a982d276bac0df12012e2c134c94ac217', username: 'test@test.com',password: '12345'}
+        console.log(credentials); //{csrfToken: 'acd5218eaf083a6208380d85e42cc32a982d276bac0df12012e2c134c94ac217', username: 'test@test.com',password: '12345'}
 
         const username = credentials?.username;
         const password = credentials?.password;
@@ -39,4 +39,19 @@ export const authOptions: NextAuthConfig = {
     strategy: "jwt",
   },
   secret: process.env.AUTH_SECRET,
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        //@ts-ignore
+        session.user.id = token.id;
+      }
+      return session;
+    },
+  },
 };
