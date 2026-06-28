@@ -14,13 +14,27 @@ export const authOptions: NextAuthConfig = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log(credentials);
+        const username = credentials?.username;
+        const password = credentials?.password;
+
+        if (typeof username !== "string" || typeof password !== "string") {
+          return null;
+        }
+
+        if (username === "test@test.com" && password === "12345") {
+          return {
+            id: "1",
+            name: "Admin",
+            email: username,
+          };
+        }
+
+        return null;
       },
-     
     }),
   ],
-   session: {
-        strategy: "jwt",
-      },
-      secret: process.env.AUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.AUTH_SECRET,
 };
