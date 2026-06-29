@@ -12,7 +12,7 @@ const SessionWrapper = () => {
             <p>{session && 'Signed In successfully'} user data: {JSON.stringify(session)}</p>
             {session ? <SignOut /> : (
                 <button>
-                    <Link href='/api/auth/signin'>Sign In</Link>
+                    <Link href='/signIn'>Sign In</Link>
                 </button>
             )}
         </>

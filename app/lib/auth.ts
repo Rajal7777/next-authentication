@@ -8,30 +8,30 @@ export const authOptions: NextAuthConfig = {
       name: "Credentials",
       //This will create a login form with username and password field
       credentials: {
-        username: {
-          label: "Username",
-          type: "text",
+        email: {
+          label: "Email",
+          type: "email",
           placeholder: "Enter your email address",
         },
         password: { label: "Password", type: "password" },
       },
       //this function will be called every time user login
       async authorize(credentials) {
-        console.log(credentials); //{csrfToken: 'acd5218eaf083a6208380d85e42cc32a982d276bac0df12012e2c134c94ac217', username: 'test@test.com',password: '12345'}
+        console.log(credentials); //{csrfToken: '...', email: 'test@test.com', password: '12345'}
 
         //Extract values
-        const username = credentials?.username;
+        const email = credentials?.email;
         const password = credentials?.password;
 
-        if (typeof username !== "string" || typeof password !== "string") {
+        if (typeof email !== "string" || typeof password !== "string") {
           return null;
         }
 
-        if (username === "test@test.com" && password === "12345") {
+        if (email === "test@test.com" && password === "12345") {
           return {
             id: "1",
             name: "Admin",
-            email: username,
+            email,
           };
         }
 
@@ -69,6 +69,6 @@ export const authOptions: NextAuthConfig = {
     },
   },
   pages: {
-    signIn: '/signIn'
+    signIn: '/signin'
   }
 };
